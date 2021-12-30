@@ -16,16 +16,16 @@ option = input("Option (number or word): ")
 
 option = option.lower()
 if option == "1" or option == "encrypt":
-    ving.byte_to_b64() # encode image in base64
-    ving.encrypt()
-    test_variable = ving.b64_to_byte() #just for debugging reasons
+    ving.byte_to_b64() # encode file in base64
+    ving.encrypt() # encrypt file with vigenère cipher
+    final_output = ving.b64_to_byte()  #decode base64 into a bytes object
 
 elif option == "2" or option == "decrypt":
-    ving.byte_to_b64()
-    ving.decrypt()
-    test_variable = ving.b64_to_byte()
+    ving.byte_to_b64() # encode file in base64
+    ving.decrypt() # decrypt file with vigenère cipher
+    final_output = ving.b64_to_byte() #decode base64 into a bytes object
 
 nameFile = input("Give a name to the output: ")
 
-with open(nameFile,"wb") as bin_converted: # writes the bytes from the encrypted/decrypted file "name"
-   bin_converted.write(test_variable)
+with open(nameFile,"wb") as bin_converted: # writes the bytes from the encrypted/decrypted file "nameFile"
+   bin_converted.write(final_output)
