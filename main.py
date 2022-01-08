@@ -6,7 +6,7 @@ intro.geometry("1200x675")
 intro.minsize(1200, 675)
 intro.maxsize(1200, 675)
 
-vigImg = PhotoImage(file="Vigenere.jpg")
+vigImg = PhotoImage(file="backuptux.png")
 label = Label(master=intro,image=vigImg)
 label.pack()
 
