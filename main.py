@@ -1,33 +1,36 @@
 from os import linesep
 from tkinter.font import BOLD, ITALIC
-from funcs import Vigenere64
 from tkinter import *
 from tkinter import filedialog
+import secondScreen
 
 DEFAULTCOLOR = "#FFFFFF" #color to be applied in all backgrounds
-BUTTONCOLOR = "#00ACFF"
+BUTTONCOLOR = "#00ACFF" #color to be applied in all buttons
 
 def encryptAction():
-    x = filedialog.askopenfile()
-    print(str(x.read()))
+    fileName = filedialog.askopenfilename()
+    fileToConvert = open(fileName,mode="rb")
+
+    screen.destroy()
+    secondScreen.SecondScreen(fileToConvert,True,window)
 
 def decryptAction():
-    print("button pressed aaa")
+    fileToConvert = filedialog.askopenfile(mode="rb")
+    screen.destroy()
+    secondScreen.SecondScreen(fileToConvert,False,window)
 
-
-
-intro = Tk()
-intro.geometry("1200x675")
-intro.minsize(1200, 675)
-intro.maxsize(1200, 675)
-intro.title("FileCrypto")
-intro.config(background=DEFAULTCOLOR)
+window = Tk()
+window.geometry("1200x675")
+window.minsize(1200, 675)
+window.maxsize(1200, 675)
+window.title("FileCrypto")
+window.config(background=DEFAULTCOLOR)
 icon = PhotoImage(file="icon.png")
-intro.iconphoto(TRUE,icon)
+window.iconphoto(TRUE,icon)
 
 vigImg = PhotoImage(file="Vigenere.png")
 
-screen = Frame(intro,pady=50,background=DEFAULTCOLOR)
+screen = Frame(window,pady=50,background=DEFAULTCOLOR)
 screen.pack()
 
 header = Frame(screen,background=DEFAULTCOLOR)
@@ -58,6 +61,4 @@ decrypt = Button(actionButtons,background=BUTTONCOLOR,text="decrypt file",font=(
 decrypt.pack(side=BOTTOM)
 
 
-
-
-intro.mainloop()
+window.mainloop()
