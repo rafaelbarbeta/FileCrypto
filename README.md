@@ -2,6 +2,9 @@
 
 <h2> WARNING: DO NOT USE THIS CODE ON PRODUCTION </h2>
 
+<h3> Lincese notice for the icon used in the GUI version </h3>
+<a href="https://commons.wikimedia.org/wiki/User:D.s.m(h)">D.s.m(h)</a>, <a href="https://commons.wikimedia.org/wiki/File:P_cryptography.png">P cryptography</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/legalcode" rel="license">CC BY-SA 3.0</a>
+
 <p> My biggest project so far: A Python 3 script able to encrypt any type of file using a cipher similar to the original Vigenère Cipher. This cipher was designed only to be applied on text, so to encrypt other types of files, like images, videos or any kind of files available on a binary format, FileCrypto first encode all of the data into a base64 bytes object, then creates a list with the ASCII values of each base64 symbol. That way it is possible to apply the cipher and finally decode back to the binary that is going to be written on a file somewhere.</p>
 
 <p>The algebric representation of the cipher is as follow:</p>
