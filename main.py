@@ -10,14 +10,14 @@ BUTTONCOLOR = "#00ACFF" #color to be applied in all buttons
 def encryptAction():
     fileName = filedialog.askopenfilename()
     fileToConvert = open(fileName,mode="rb")
-
     screen.destroy()
-    secondScreen.SecondScreen(fileToConvert,True,window)
+    secondScreen.SecondScreen(fileToConvert,fileName,True,window)
 
 def decryptAction():
-    fileToConvert = filedialog.askopenfile(mode="rb")
+    fileName = filedialog.askopenfilename()
+    fileToConvert = open(fileName,mode="rb")
     screen.destroy()
-    secondScreen.SecondScreen(fileToConvert,False,window)
+    secondScreen.SecondScreen(fileToConvert,fileName,False,window)
 
 window = Tk()
 window.geometry("1200x675")
@@ -59,6 +59,5 @@ orText.pack()
 decrypt = Button(actionButtons,background=BUTTONCOLOR,text="decrypt file",font=("Calibri",14,BOLD),
                  activebackground="#005A86",bd=0,relief=RIDGE,command=decryptAction)
 decrypt.pack(side=BOTTOM)
-
 
 window.mainloop()
