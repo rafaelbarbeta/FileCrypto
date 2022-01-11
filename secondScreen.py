@@ -1,7 +1,11 @@
 from tkinter import *
-from tkinter.font import ITALIC
+from tkinter import messagebox
+from tkinter.ttk import Progressbar, Style
+from tkinter.font import ITALIC, BOLD
 from funcs import Vigenere64
 from os.path import getsize, basename
+
+logs_text = "logs are shown here"
 
 def setInfo(pathFileName):
     fileInfo = ["","",""]
@@ -48,6 +52,42 @@ def setInfo(pathFileName):
     
     return fileInfo
 
+def run(fileToConvert,pathFileName,option,key,window,bar):
+    answer = messagebox.askquestion("Warning","Are you sure you want to "+option+" this file?")
+    if answer == "no":
+        return 0
+    bin_to_convert = fileToConvert.read()
+    bar["value"] += 20
+    window.update_idletasks()
+    fileToConvert.close()
+    vigenere = Vigenere64(bin_to_convert,key)
+    if option == "encrypt":
+        vigenere.byte_to_b64()
+        bar["value"] += 20
+        window.update_idletasks()
+        vigenere.encrypt()
+        bar["value"] += 20
+        window.update_idletasks()
+        bin_converted = vigenere.b64_to_byte()
+        bar["value"] += 20
+        window.update_idletasks()
+    else:
+        vigenere.byte_to_b64()
+        bar["value"] += 20
+        window.update_idletasks()
+        vigenere.decrypt()
+        bar["value"] += 20
+        window.update_idletasks()
+        bin_converted = vigenere.b64_to_byte()
+        bar["value"] += 20
+        window.update_idletasks()
+    with open(pathFileName,"wb") as file_converted:
+        file_converted.write(bin_converted)
+    bar["value"] += 20
+    window.update_idletasks()
+    messagebox.showinfo("Operation Successful","File has been "+option+"ed")
+    window.destroy()
+
 def SecondScreen(fileToConvert,pathFileName,option,window):
     DEFAULTCOLOR = "#FFFFFF"
     BUTTONCOLOR = "#00ACFF"
@@ -73,7 +113,17 @@ def SecondScreen(fileToConvert,pathFileName,option,window):
     entry = Entry(passwordBox,background=DEFAULTCOLOR,fg="black",width=30,bd=3,relief=RIDGE,font=("Times New Roman",14))
     entry.pack(side=BOTTOM,pady=15)
 
+    ProgressBox = Frame(screen2,background=DEFAULTCOLOR)
+    ProgressBox.pack(pady=35)
 
+    logs = Label(ProgressBox,background=DEFAULTCOLOR,text=logs_text,font=("Calibri",10),fg="grey")
+    logs.grid(column=8,row=0,columnspan=8)
 
+    style = Style()
+    style.configure("TProgressbar",thickness=25) #changes the progress bar style thickness
+    bar = Progressbar(ProgressBox,length=400)
+    bar.grid(column=0,row=1,columnspan=20)
 
-
+    runButton = Button(ProgressBox,background=BUTTONCOLOR,text=option+"!",font=("Calibri",12,BOLD),
+                 activebackground="#005A86",bd=0,relief=RIDGE,command=lambda:run(fileToConvert,pathFileName,option,entry.get(),window,bar))
+    runButton.grid(column=21,row=1,padx=25)

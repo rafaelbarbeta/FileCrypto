@@ -11,13 +11,13 @@ def encryptAction():
     fileName = filedialog.askopenfilename()
     fileToConvert = open(fileName,mode="rb")
     screen.destroy()
-    secondScreen.SecondScreen(fileToConvert,fileName,True,window)
+    secondScreen.SecondScreen(fileToConvert,fileName,"encrypt",window)
 
 def decryptAction():
     fileName = filedialog.askopenfilename()
     fileToConvert = open(fileName,mode="rb")
     screen.destroy()
-    secondScreen.SecondScreen(fileToConvert,fileName,False,window)
+    secondScreen.SecondScreen(fileToConvert,fileName,"decrypt",window)
 
 window = Tk()
 window.geometry("1200x675")
