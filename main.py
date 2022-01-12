@@ -1,7 +1,7 @@
 from os import linesep
 from tkinter.font import BOLD, ITALIC
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 import secondScreen
 
 DEFAULTCOLOR = "#FFFFFF" #color to be applied in all backgrounds
@@ -9,20 +9,27 @@ BUTTONCOLOR = "#00ACFF" #color to be applied in all buttons
 
 def encryptAction():
     fileName = filedialog.askopenfilename()
-    fileToConvert = open(fileName,mode="rb")
-    screen.destroy()
-    secondScreen.SecondScreen(fileToConvert,fileName,"encrypt",window)
+    try:
+        fileToConvert = open(fileName,mode="rb")
+        screen.destroy()
+        secondScreen.SecondScreen(fileToConvert,fileName,"encrypt",window)
+    except Exception:
+        messagebox.showinfo("Error","Error, file not found or unable to process")
+
 
 def decryptAction():
     fileName = filedialog.askopenfilename()
-    fileToConvert = open(fileName,mode="rb")
-    screen.destroy()
-    secondScreen.SecondScreen(fileToConvert,fileName,"decrypt",window)
+    try:
+        fileToConvert = open(fileName,mode="rb")
+        screen.destroy()
+        secondScreen.SecondScreen(fileToConvert,fileName,"decrypt",window)
+    except Exception:
+        messagebox.showinfo("Error","Error, file not found or unable to process")
 
 window = Tk()
-window.geometry("1200x675")
-window.minsize(1200, 675)
-window.maxsize(1200, 675)
+window.geometry("960x600")
+window.minsize(960, 600)
+window.maxsize(960, 600)
 window.title("FileCrypto")
 window.config(background=DEFAULTCOLOR)
 icon = PhotoImage(file="icon.png")
