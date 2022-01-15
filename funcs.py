@@ -11,16 +11,12 @@ class Vigenere64():
 
     def __init__(self, bytes_file,key): #the bytes of the file open is stored in the "bytes_file" instance variable
         self.bytes_file = bytes_file
-        self.ascii_remaped = dict(zip(self.base64_symbols,self.bse64_symbols_values))
+        self.ascii_remaped = dict(zip(self.base64_symbols,self.bse64_symbols_values)) #maps the ascii values to a ordered sequence 
+        self.ascii_demaped = {value : key for key, value in self.ascii_remaped.items()} #"demaps" the ordered sequence back to the actual ascii values
         self.key_len = len(key)
         for i in range(self.key_len): #split the key in characters, the get it's ascii corresponding number
             self.key_decomposed.append(ord(key[i]))
             self.key_decomposed[i] = self.ascii_remaped.get(self.key_decomposed[i]) #remaps the number according with the dictionary "ascci_remaped"
-
-    def get_key(self, val): # Not the best approach to get the keys from values. To be changed in further commits
-        for key, value in self.ascii_remaped.items():
-             if val == value:
-                  return key
 
     def byte_to_b64(self): #converts an image to base64 encoding and returns an list with the ASCII values for the image
         self.ascii_values_list = list(base64.b64encode(self.bytes_file))
@@ -38,14 +34,14 @@ class Vigenere64():
             if mapped_value == None: #if the mapped value is None, that means the padding "=" has been reached, and therefore the encrypt function has fineshed it's job
                 break
             encrypted_mapped_value = (mapped_value + self.key_decomposed[i % self.key_len]) % 64
-            encrypted_ascii_value = self.get_key(encrypted_mapped_value)
+            encrypted_ascii_value = self.ascii_demaped.get(encrypted_mapped_value)
             self.ascii_values_list[i] = encrypted_ascii_value
 
-    def decrypt(self):
+    def decrypt(self):  
         for i in range(len(self.ascii_values_list)):
             mapped_value = self.ascii_remaped.get(self.ascii_values_list[i])
             if mapped_value == None: #if the mapped value is None, that means the padding "=" has been reached, and therefore the encrypt function has fineshed it's job
                 break
-            encrypted_mapped_value = (mapped_value - self.key_decomposed[i % self.key_len]) % 64
-            encrypted_ascii_value = self.get_key(encrypted_mapped_value)
+            encrypted_mapped_value = (mapped_value - self.key_decomposed[i % self.key_len]) % 64 #Only line that differ's from the encryption
+            encrypted_ascii_value = self.ascii_demaped.get(encrypted_mapped_value)
             self.ascii_values_list[i] = encrypted_ascii_value
